@@ -15,7 +15,7 @@
 
 terraform {
   backend "gcs" {
-    bucket = "kubernetes-hard-way-262718-tfstate"
+    bucket = "kubernetes-hard-way-262920-tfstate"
     prefix = "env/prod"
   }
 }
