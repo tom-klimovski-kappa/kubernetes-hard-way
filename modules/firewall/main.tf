@@ -5,8 +5,8 @@ locals {
 
 resource "google_compute_firewall" "allow-http" {
   name    = "${local.network}-allow-http"
-  network = "${local.network}"
-  project = "${var.project}"
+  network = "local.network"
+  project = "var.project"
 
   allow {
     protocol = "tcp"
@@ -19,9 +19,8 @@ resource "google_compute_firewall" "allow-http" {
 
 resource "google_compute_firewall" "kubernetes-the-hard-way-allow-internal" {
   name    = "${local.network}-allow-internal"
-  network = "${local.network}"
-  project = "${var.project}"
-
+  network = "local.network"
+  project = "var.project}"
   allow {
     protocol = "tcp,udp,icmp"
     ports    = ["80"]
@@ -32,8 +31,8 @@ resource "google_compute_firewall" "kubernetes-the-hard-way-allow-internal" {
 
 resource "google_compute_firewall" "kubernetes-the-hard-way-allow-external" {
   name    = "${local.network}-allow-external"
-  network = "${local.network}"
-  project = "${var.project}"
+  network = "local.network"
+  project = "var.project"
 
   allow {
     protocol = "tcp,icmp"

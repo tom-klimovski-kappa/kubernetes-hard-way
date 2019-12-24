@@ -3,7 +3,7 @@ module "vpc" {
   source  = "terraform-google-modules/network/google"
   version = "0.6.0"
 
-  project_id   = "${var.project}"
+  project_id   = "var.project"
   network_name = "kubernetes-the-hard-way-${var.env}"
 
   subnets = [

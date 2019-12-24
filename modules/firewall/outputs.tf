@@ -1,5 +1,5 @@
 
-output "internal_firewall_rule" {
+output "firewall_rule" {
   value = "${google_compute_firewall.kubernetes-the-hard-way-allow-internal.name}"
 }
 
