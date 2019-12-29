@@ -18,12 +18,12 @@ module "vpc" {
   version = "0.6.0"
 
   project_id   = "${var.project}"
-  network_name = "${var.env}"
+  network_name = "kubernetes-the-hard-way-${var.env}"
 
   subnets = [
     {
       subnet_name   = "${var.env}-subnet-01"
-      subnet_ip     = "10.${var.env == "dev" ? 10 : 20}.10.0/24"
+      subnet_ip     = "10.${var.env == "dev" ? 240 : 230}.0.0/24"
       subnet_region = "us-west1"
     },
   ]
@@ -32,3 +32,17 @@ module "vpc" {
     "${var.env}-subnet-01" = []
   }
 }
+
+for i in 0 1 2; do
+  gcloud compute instances create controller-${i} \
+    --async \
+    --boot-disk-size 200GB \
+    --can-ip-forward \
+    --image-family ubuntu-1804-lts \
+    --image-project ubuntu-os-cloud \
+    --machine-type n1-standard-1 \
+    --private-network-ip 10.240.0.1${i} \
+    --scopes compute-rw,storage-ro,service-management,service-control,logging-write,monitoring \
+    --subnet dev-subnet-01 \
+    --tags kubernetes-the-hard-way,controller
+done
