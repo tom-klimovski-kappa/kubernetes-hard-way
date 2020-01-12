@@ -3,8 +3,13 @@ locals {
   network = "kubernetes-the-hard-way-${element(split("-", var.subnet), 0)}"
 }
 
+resource "google_compute_address" "external_with_subnet_and_address" {
+  name         = "kubernetes-the-hard-way-${var.env}"
+  region       = "us-west1"
+}
+
 resource "google_compute_instance" "compute_kubernetes_control_plane" {
-  count           = 3
+  count           = 2 # down to two because of quota on free trial Compute Engine API In-use IP addresses
   name            = "controller-${count.index}"
   zone            = "us-west1-a"
   machine_type    = "n1-standard-1"
@@ -23,6 +28,7 @@ resource "google_compute_instance" "compute_kubernetes_control_plane" {
     network = "${local.network}"
     network_ip = "10.240.0.1${count.index}"
     subnetwork = "${var.env}-subnet-01"
+    access_config { } # without this nodes don't get external ip and cannot reach the Internet
   }
 
   service_account {
@@ -31,7 +37,7 @@ resource "google_compute_instance" "compute_kubernetes_control_plane" {
 }
 
 resource "google_compute_instance" "compute_kubernetes_workers" {
-  count           = 3
+  count           = 2 # down to two because of quota on free trial Compute Engine API In-use IP addresses
   name            = "worker-${count.index}"
   zone            = "us-west1-a"
   machine_type    = "n1-standard-1"
@@ -50,6 +56,7 @@ resource "google_compute_instance" "compute_kubernetes_workers" {
     network = "${local.network}"
     network_ip = "10.240.0.2${count.index}"
     subnetwork = "${var.env}-subnet-01"
+    access_config { } # without this nodes don't get external ip and cannot reach the Internet
   }
 
   service_account {

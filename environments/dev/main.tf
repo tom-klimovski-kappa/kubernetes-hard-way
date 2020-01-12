@@ -19,14 +19,30 @@ module "firewall" {
   subnet  = "${module.vpc.subnet}"
 }
 
-resource "google_compute_address" "internal_with_subnet_and_address" {
-  name         = "kubernetes-the-hard-way-${local.env}"
-  region       = "us-west1"
-}
-
 module "compute" {
   source        = "../../modules/compute"
   project       = "${var.project}"
   env           = "${local.env}"
   subnet        = "${module.vpc.subnet}"
 }
+
+resource "google_compute_instance" "local_exec_create" {
+  provisioner "local-exec" {
+    when    = "create"
+    command = "../../certs/create-certs-keys.sh"
+  }  
+}
+
+# resource "null_resource" "example1" {
+#   provisioner "local-exec" {
+#     command = "open WFH, '>completed.txt' and print WFH scalar localtime"
+#     interpreter = ["perl", "-e"]
+#   }
+# }
+
+# resource "google_compute_instance" "local_exec_destroy" {
+#   provisioner "local-exec" {
+#     when    = "destroy"
+#     command = "../../certs/delete-certs-keys.sh"
+#   }
+# }

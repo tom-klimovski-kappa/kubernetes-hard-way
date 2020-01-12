@@ -1,34 +1,20 @@
-# Copyright 2019 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
+# output "network" {
+#   value = "${module.vpc.network}"
+# }
 
-output "network" {
-  value = "${module.vpc.network}"
-}
+# output "subnet" {
+#   value = "${module.vpc.subnet}"
+# }
 
-output "subnet" {
-  value = "${module.vpc.subnet}"
-}
+# output "firewall_rule_internal" {
+#   value = "${module.firewall.firewall_rule_internal}"
+# }
 
-output "firewall_rule_internal" {
-  value = "${module.firewall.firewall_rule_internal}"
-}
+# output "firewall_rule_external" {
+#   value = "${module.firewall.firewall_rule_external}"
+# }
 
-output "firewall_rule_external" {
-  value = "${module.firewall.firewall_rule_external}"
-}
-
-output "external_with_subnet_and_address" {
-  value = "${google_compute_address.internal_with_subnet_and_address.address}" 
-}
+# output "external_with_subnet_and_address" {
+#   value = "${module.compute.external_with_subnet_and_address}" 
+# }
